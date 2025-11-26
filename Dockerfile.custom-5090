@@ -1,0 +1,5 @@
+FROM runpod/comfyui:latest-5090
+
+# Replace start.sh with custom version
+COPY start.5090.sh /start.sh
+RUN chmod +x /start.sh

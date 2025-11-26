@@ -63,3 +63,26 @@ target "rtx5090" {
 group "all" {
   targets = ["regular", "rtx5090"]
 }
+
+# Custom builds (based on runpod images, only replacing start.sh)
+target "custom" {
+  inherits = ["common"]
+  dockerfile = "Dockerfile.custom"
+  tags = [
+    "${REGISTRY}/comfyui:${TAG}",
+    "${REGISTRY}/comfyui:latest",
+  ]
+}
+
+target "custom-5090" {
+  inherits = ["common"]
+  dockerfile = "Dockerfile.custom-5090"
+  tags = [
+    "${REGISTRY}/comfyui:${TAG}-5090",
+    "${REGISTRY}/comfyui:latest-5090",
+  ]
+}
+
+group "custom-all" {
+  targets = ["custom", "custom-5090"]
+}

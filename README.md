@@ -2,6 +2,27 @@
 
 Run the latest ComfyUI. First start installs dependencies (takes a few minutes), then when you see this in the logs, ComfyUI is ready to be used: `[ComfyUI-Manager] All startup tasks have been completed.`
 
+## Commands
+
+```bash
+# build
+docker buildx bake regular        # Dockerfile → nxndev/comfyui:slim, :latest
+docker buildx bake rtx5090        # Dockerfile.5090 → nxndev/comfyui:slim-5090, :latest-5090
+docker buildx bake custom         # Dockerfile.custom → nxndev/comfyui:slim, :latest
+docker buildx bake custom-5090    # Dockerfile.custom-5090 → nxndev/comfyui:slim-5090, :latest-5090
+docker buildx bake dev            # Dockerfile → nxndev/comfyui:dev (local test)
+docker buildx bake devpush        # Dockerfile → nxndev/comfyui:dev
+docker buildx bake devpush5090    # Dockerfile.5090 → nxndev/comfyui:dev-5090
+
+# group build
+docker buildx bake all            # regular + rtx5090 (full build)
+docker buildx bake custom-all     # custom + custom-5090 (custom light build < recommanded)
+
+# options
+--push                            # push to the docker hub
+--no-cache                        # without cache
+```
+
 ## Access
 
 - `8188`: ComfyUI web UI

@@ -1,0 +1,5 @@
+FROM runpod/comfyui:latest
+
+# Replace start.sh with custom version
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
