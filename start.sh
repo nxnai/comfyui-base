@@ -5,6 +5,7 @@ COMFYUI_DIR="/workspace/runpod-slim/ComfyUI"
 VENV_DIR="$COMFYUI_DIR/.venv"
 FILEBROWSER_CONFIG="/root/.config/filebrowser/config.json"
 DB_FILE="/workspace/runpod-slim/filebrowser.db"
+LOG_FILE="${COMFYUI_LOG_FILE:-/root/comfyui.log}"
 
 # ---------------------------------------------------------------------------- #
 #                          Function Definitions                                  #
@@ -257,16 +258,16 @@ if [ -s "$ARGS_FILE" ]; then
     CUSTOM_ARGS=$(grep -v '^#' "$ARGS_FILE" | tr '\n' ' ')
     if [ ! -z "$CUSTOM_ARGS" ]; then
         echo "Starting ComfyUI with additional arguments: $CUSTOM_ARGS"
-        nohup python main.py $FIXED_ARGS $CUSTOM_ARGS &> /workspace/runpod-slim/comfyui.log &
+        nohup python main.py $FIXED_ARGS $CUSTOM_ARGS &> "$LOG_FILE" &
     else
         echo "Starting ComfyUI with default arguments"
-        nohup python main.py $FIXED_ARGS &> /workspace/runpod-slim/comfyui.log &
+        nohup python main.py $FIXED_ARGS &> "$LOG_FILE" &
     fi
 else
     # File is empty, use only fixed args
     echo "Starting ComfyUI with default arguments"
-    nohup python main.py $FIXED_ARGS &> /workspace/runpod-slim/comfyui.log &
+    nohup python main.py $FIXED_ARGS &> "$LOG_FILE" &
 fi
 
 # Tail the log file
-tail -f /workspace/runpod-slim/comfyui.log
+tail -f "$LOG_FILE"
